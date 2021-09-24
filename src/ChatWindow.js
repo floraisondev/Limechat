@@ -32,13 +32,12 @@ class ChatWindow extends  React.Component {
 
     async fetchMoreChats(){
     const {page, allChats } = this.state;
-
      await axios.get(`https://retoolapi.dev/m89lfD/limechat?_page=${page}&_limit=15`)
           .then((response) => {
-              console.log(response)
+             
             // handle success
             this.setState({
-                allChats :_.orderBy([...allChats, ...response.data], "Created At")
+                allChats : _.orderBy([...allChats, ...response.data],"Created At")
             })
            
             })
@@ -49,14 +48,14 @@ class ChatWindow extends  React.Component {
     }
 
     sendChat = () => {
-        this.setState({newChat : null})
-    console.log(this.state.newChat)
-    console.log(+new Date)
+    this.setState({newChat : null})
+    let timeStamp = + new Date()
     axios.post('https://retoolapi.dev/m89lfD/limechat', 
     {
      "Content": this.state.newChat,
-     "Created At": "2021-07-11T08:28:04", 
-     "Updated At": "2021-07-11T08:28:04"})
+     "Created At": timeStamp, 
+     "Updated At": timeStamp
+    })
       .then(function (response) {
         console.log(response);
       })
@@ -73,12 +72,10 @@ class ChatWindow extends  React.Component {
    
 render() {
 const {classes} = this.props;
-
-console.log(this.state.allChats)
     return(
         <>
         <Grid className={classes.chatContainer}>
-            <div  ref={this.chatRef}></div>
+            <div  ref={this.chatRef}>Hi</div>
              <Grid className = {classes.chatHeader} style ={{ display : "flex", justifyContent : "space-between"}}> 
 
                     <div style = {{ 
@@ -104,7 +101,7 @@ console.log(this.state.allChats)
               </Grid>
 
           <Grid className = {classes.chat}>
-                 {this.state.allChats && this.state.allChats.map((m) =>
+                 {this.state.allChats.map((m) =>
                     m[`Message Type`] == 0 ? 
                     <>
                       <div className={classes.customerChatBubble}>
@@ -113,7 +110,7 @@ console.log(this.state.allChats)
                             <div style = {{ color : "#fff", fontWeight : "bold"}}>Customer</div>
                           <div style = {{ fontSize : 12, color : "#fff", marginTop : 5}}>{moment(m[`Created At`]).format('MM/DD/YYYY hh:mm a')}</div>
                             </div>
-                         <div style = {{ color : "#fff", fontSize : 14, marginTop : 12, textAlign : "left"}}> {m.Content}</div>
+                         <div style = {{ color : "#fff", fontSize : 14, marginTop : 12, textAlign : "left"}}>{m.Content}</div>
                           </div>
                           </div>
                         </>  
@@ -125,7 +122,7 @@ console.log(this.state.allChats)
                             <div style = {{ color : "#000", fontWeight : "bold"}}>Agent</div>
                            <div style = {{ fontSize : 12, color : "#000", marginTop : 5}}>{moment(m[`Created At`]).format('MM/DD/YYYY hh:mm a')}</div>
                             </div>   
-                         <div style = {{ color : "#000", fontSize : 14, marginTop : 12, textAlign : "left"}}> {m.Content}</div>
+                         <div style = {{ color : "#000", fontSize : 14, marginTop : 12, textAlign : "left"}}>{m.Content}</div>
                           </div>
                           </div>
                     </>  
