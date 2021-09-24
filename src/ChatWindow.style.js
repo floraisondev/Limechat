@@ -19,7 +19,7 @@ export default{
   },
 
   chat : {
-    height : "1000px",
+    height : "auto",
     padding:20, 
     display : "flex",
     flexDirection : "column-reverse",
