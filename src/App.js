@@ -1,23 +1,31 @@
 import logo from './logo.svg';
 import './App.css';
+import ChatWindow from "./ChatWindow"
+import React, {useEffect, useState} from "react"
+import axios from "axios"
+const App = () => {
+ useEffect(() => {
+   getAllMessages()
+ },[])
+  const [allMessages, setAllMessages] = useState(null)
+  
+  const getAllMessages = () => {
+    axios.get("https://retoolapi.dev/m89lfD/limechat")
+    .then((response) => {
+      // handle success
+      // console.log(response)
+      setAllMessages(response)
+    })
+    .catch((error) => {
+      // handle error
+      console.error(error);
+    })
+  } 
 
-function App() {
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <ChatWindow allMessages = {allMessages ? allMessages : null}/>
     </div>
   );
 }
