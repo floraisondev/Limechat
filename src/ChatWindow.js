@@ -37,7 +37,7 @@ class ChatWindow extends  React.Component {
              
             // handle success
             this.setState({
-                allChats : _.orderBy([...allChats, ...response.data],"Created At")
+                allChats : _.orderBy([...allChats, ...response.data],"Created At", "desc")
             })
            
             })
